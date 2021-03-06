@@ -1,0 +1,13 @@
+query ($id: ID!) {
+  genre(id: $id) {
+    id
+    name
+    books {
+      id
+      title
+      author
+      image
+
+    }
+  }
+}

@@ -1,0 +1,6 @@
+query {
+  featuredBooks(featured: true) {
+    id
+    title
+  }
+}

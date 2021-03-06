@@ -1,0 +1,14 @@
+query {
+  books {
+    id
+    title
+    author
+    image
+    link
+    description
+    featured
+    genre {
+      id
+    }
+  }
+}
