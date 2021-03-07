@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import GenresQuery from '@/graphql/queries/Genres.gql'
-import BooksQuery from '@/graphql/queries/Books.gql'
+
+import { mapGetters } from 'vuex'
 import DeleteBook from '@/graphql/mutations/DeleteBook.gql'
 import GenresComponent from '@/components/Genres.vue'
 import BooksComponent from '@/components/Books.vue'
@@ -32,13 +32,13 @@ export default {
     GenresComponent,
     BooksComponent
   },
+  computed: mapGetters([
+    'genres',
+    'books'
+  ]),
   data() {
     return {
       selectedGenre: 'featured',
-      genreData: {},
-      genres: [],
-      booksData: {},
-      books: [],
       deletedBook: {},
       snackbar: false,
       timeout: 2000,
@@ -57,10 +57,6 @@ export default {
       }
       window.scrollTo(0,0)
     },
-    async getBooks() {
-      this.booksData = await this.$apollo.query({query: BooksQuery})
-      this.books = this.booksData.data.books
-    },
     async deleteBook($event) {
       this.deletedBook = await this.$apollo.mutate({
           mutation: DeleteBook,
@@ -75,9 +71,8 @@ export default {
     }
   },
   async mounted() {
-    this.genreData = await this.$apollo.query({query: GenresQuery})
-    this.genres = this.genreData.data.genres
-    this.getBooks()
+    this.$store.dispatch('getGenres')
+    this.$store.dispatch('getBooks')
   }
 }
 </script>
