@@ -71,8 +71,6 @@
 
 <script>
 
-  import CreateBook from '@/graphql/mutations/CreateBook.gql'
-
   export default {
     data: () => ({
       valid: true,
@@ -100,23 +98,20 @@
     }),
 
     methods: {
-      async submit() {
+      submit() {
         if (this.valid) {
-          console.log(this.select)
-          await this.$apollo.mutate({
-              mutation: CreateBook,
-              variables: {
-                title: this.title,
-                author: this.author,
-                image: this.image,
-                link: this.link,
-                description: this.description,
-                featured: this.featured,
-                genre_id: this.select
-              }
-          })
+          const book = {
+            title: this.title,
+            author: this.author,
+            image: this.image,
+            link: this.link,
+            description: this.description,
+            featured: this.featured,
+            genre_id: this.select
+          }
+          this.$store.commit('addBook', book)
         }
-        this.$router.go(-1)
+        this.$router.push('/')
       },
       cancel () {
         this.$router.push('/')

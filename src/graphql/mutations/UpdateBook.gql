@@ -1,4 +1,5 @@
 mutation(
+  $id: ID!
   $title: String
   $author: String
   $image: String
@@ -8,6 +9,7 @@ mutation(
   $genre_id: Int
 ) {
   updateBook(
+    id: $id
     title: $title
     author: $author
     image: $image
